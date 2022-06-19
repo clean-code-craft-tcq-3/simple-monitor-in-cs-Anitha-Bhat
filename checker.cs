@@ -64,17 +64,17 @@ public class Checker
     return true;
   }
 
-  private static void printText(string text)
+   static void printText(string text)
   {
     Console.WriteLine(text);
   }
 
-  private static double getUpperTolerenceValue(double upperLimit, double value)
+   static double getUpperTolerenceValue(double upperLimit, double value)
   {
     return (double)value - 0.05 * upperLimit;
 
   }
-  private static double getLowerTolerenceValue(double lowerLimt, double value)
+   static double getLowerTolerenceValue(double lowerLimt, double value)
   {
     return (double)value + 0.05 * lowerLimt;
   }
@@ -131,7 +131,7 @@ public class Checker
   static int Main()
   {
 
-    Resources.Culture = new CultureInfo("de");
+    Resource.Culture = new CultureInfo("de");
     Assert.Equal(batteryIsOk(0, 19, 1), false);
     Assert.Equal(batteryIsOk(1, 21, 1), false);
     Assert.Equal(batteryIsOk(1, 81, 0.7), false);
