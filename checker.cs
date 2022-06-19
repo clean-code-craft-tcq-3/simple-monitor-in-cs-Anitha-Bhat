@@ -1,9 +1,8 @@
 
 using System;
+using Properties;
 using System.Diagnostics;
 using System.Globalization;
-using Properties;
-using Xunit;
 
 public class Checker
 {
@@ -14,7 +13,7 @@ public class Checker
   static double CHARGERATE_LOWER_LIMIT = 0.8;
 
 
- public static bool batteryIsOk(double temperature, double stateOfCharge, double chargeRate)
+  public static bool batteryIsOk(double temperature, double stateOfCharge, double chargeRate)
   {
     if (monitorChargeRateWarningRange(chargeRate) && monitorSOCWarningRange(stateOfCharge) &&
         monitorTemperatureWarningRange(temperature))
@@ -42,7 +41,7 @@ public class Checker
 
 
 
- public static bool isStateOfChargeInValidRange(double stateOfCahrge)
+  public static bool isStateOfChargeInValidRange(double stateOfCahrge)
   {
     if (stateOfCahrge < SOC_LOWER_LIMIT || stateOfCahrge > SOC_UPPER_LIMIT)
     {
@@ -54,7 +53,7 @@ public class Checker
 
 
 
-   public static bool isChargeRateInValidRange(double chargeRate)
+  public static bool isChargeRateInValidRange(double chargeRate)
   {
     if (chargeRate > CHARGERATE_LOWER_LIMIT)
     {
@@ -80,7 +79,7 @@ public class Checker
     return (double)value + 0.05 * lowerLimt;
   }
 
-   public static bool isLowerLimitInWarningRange(double temperature, double lowerLimit, Action printAction)
+  public static bool isLowerLimitInWarningRange(double temperature, double lowerLimit, Action printAction)
   {
     if (getLowerTolerenceValue(lowerLimit, temperature) >= temperature)
     {
@@ -90,7 +89,7 @@ public class Checker
     return false;
   }
 
-   public static bool isUpperLimitInWarningRange(double temperature, double upperLimit, Action printAction)
+  public static bool isUpperLimitInWarningRange(double temperature, double upperLimit, Action printAction)
   {
     if (getUpperTolerenceValue(upperLimit, temperature) <= temperature)
     {
@@ -121,7 +120,7 @@ public class Checker
     return false;
   }
 
-   public static bool monitorTemperatureWarningRange(double temperature)
+  public static bool monitorTemperatureWarningRange(double temperature)
   {
     if (isLowerLimitInWarningRange(temperature, TEMPERATURE_LOWER_LIMIT, () => printText(Resource.WarningDischarge)) || isUpperLimitInWarningRange(temperature, TEMPERATURE_UPPER_LIMIT, () => printText(Resource.WarningPeak)))
     {
@@ -129,60 +128,60 @@ public class Checker
     }
     return false;
   }
-  static int Main()
+  public static int Main()
   {
 
     Resource.Culture = new CultureInfo("de");
-    Assert.Equal(batteryIsOk(0, 19, 1), false);
-    Assert.Equal(batteryIsOk(1, 21, 1), false);
-    Assert.Equal(batteryIsOk(1, 81, 0.7), false);
-    Assert.Equal(batteryIsOk(-1, 79, 0.7), false);
-    Assert.Equal(batteryIsOk(1, 21, 0.7), false);
-    Assert.Equal(batteryIsOk(44, 79, 0.7), false);
+    Debug.Assert(batteryIsOk(0, 19, 1) == false);
+    Debug.Assert(batteryIsOk(1, 21, 1) == false);
+    Debug.Assert(batteryIsOk(1, 81, 0.7) == false);
+    Debug.Assert(batteryIsOk(-1, 79, 0.7) == false);
+    Debug.Assert(batteryIsOk(1, 21, 0.7) == false);
+    Debug.Assert(batteryIsOk(44, 79, 0.7) == false);
 
     //Check if temperature in range
-    Assert.Equal(isTemperatureInValidRange(0), true);
-    Assert.Equal(isTemperatureInValidRange(45), true);
-    Assert.Equal(isTemperatureInValidRange(-1), false);
-    Assert.Equal(isTemperatureInValidRange(46), false);
-    Assert.Equal(isTemperatureInValidRange(40), true);
+    Debug.Assert(isTemperatureInValidRange(0) == true);
+    Debug.Assert(isTemperatureInValidRange(45) == true);
+    Debug.Assert(isTemperatureInValidRange(-1) == false);
+    Debug.Assert(isTemperatureInValidRange(46) == false);
+    Debug.Assert(isTemperatureInValidRange(40) == true);
 
 
-    Assert.Equal(isStateOfChargeInValidRange(20), true);
-    Assert.Equal(isStateOfChargeInValidRange(80), true);
-    Assert.Equal(isStateOfChargeInValidRange(19), false);
-    Assert.Equal(isStateOfChargeInValidRange(81), false);
-    Assert.Equal(isStateOfChargeInValidRange(21), true);
+    Debug.Assert(isStateOfChargeInValidRange(20) == true);
+    Debug.Assert(isStateOfChargeInValidRange(80) == true);
+    Debug.Assert(isStateOfChargeInValidRange(19) == false);
+    Debug.Assert(isStateOfChargeInValidRange(81) == false);
+    Debug.Assert(isStateOfChargeInValidRange(21) == true);
 
     //Check if chargerate in range
-    Assert.Equal(isChargeRateInValidRange(0.9), false);
-    Assert.Equal(isChargeRateInValidRange(0.7), true);
-    Assert.Equal(isChargeRateInValidRange(0), true);
+    Debug.Assert(isChargeRateInValidRange(0.9) == false);
+    Debug.Assert(isChargeRateInValidRange(0.7) == true);
+    Debug.Assert(isChargeRateInValidRange(0) == true);
 
     //check temp warning levels
-    Assert.Equal(monitorTemperatureWarningRange(1), true);
-    Assert.Equal(monitorTemperatureWarningRange(2), true);
-    Assert.Equal(monitorTemperatureWarningRange(1), true);
-    Assert.Equal(monitorTemperatureWarningRange(2), true);
-    Assert.Equal(monitorTemperatureWarningRange(43), true);
-    Assert.Equal(monitorTemperatureWarningRange(44), true);
+    Debug.Assert(monitorTemperatureWarningRange(1) == true);
+    Debug.Assert(monitorTemperatureWarningRange(2) == true);
+    Debug.Assert(monitorTemperatureWarningRange(1) == true);
+    Debug.Assert(monitorTemperatureWarningRange(2) == true);
+    Debug.Assert(monitorTemperatureWarningRange(43) == true);
+    Debug.Assert(monitorTemperatureWarningRange(44) == true);
 
     //Check soc warning levels
-    Assert.Equal(monitorSOCWarningRange(21), true);
-    Assert.Equal(monitorSOCWarningRange(22), true);
-    Assert.Equal(monitorSOCWarningRange(23), true);
-    Assert.Equal(monitorSOCWarningRange(24), true);
-    Assert.Equal(monitorSOCWarningRange(77), true);
-    Assert.Equal(monitorSOCWarningRange(78), true);
-    Assert.Equal(monitorSOCWarningRange(79), true);
-    Assert.Equal(monitorSOCWarningRange(78), true);
-    Assert.Equal(monitorSOCWarningRange(79), true);
+    Debug.Assert(monitorSOCWarningRange(21) == true);
+    Debug.Assert(monitorSOCWarningRange(22) == true);
+    Debug.Assert(monitorSOCWarningRange(23) == true);
+    Debug.Assert(monitorSOCWarningRange(24) == true);
+    Debug.Assert(monitorSOCWarningRange(77) == true);
+    Debug.Assert(monitorSOCWarningRange(78) == true);
+    Debug.Assert(monitorSOCWarningRange(79) == true);
+    Debug.Assert(monitorSOCWarningRange(78) == true);
+    Debug.Assert(monitorSOCWarningRange(79) == true);
 
     //Check charge rate warnings
-    Assert.Equal(monitorChargeRateWarningRange(0.79), true);
-    Assert.Equal(monitorChargeRateWarningRange(0.77), true);
-    Assert.Equal(monitorChargeRateWarningRange(0.78), true);
-    Assert.Equal(monitorChargeRateWarningRange(0.78), true);
+    Debug.Assert(monitorChargeRateWarningRange(0.79) == true);
+    Debug.Assert(monitorChargeRateWarningRange(0.77) == true);
+    Debug.Assert(monitorChargeRateWarningRange(0.78) == true);
+    Debug.Assert(monitorChargeRateWarningRange(0.78) == true);
 
     Console.WriteLine("All ok");
     Console.Read();
