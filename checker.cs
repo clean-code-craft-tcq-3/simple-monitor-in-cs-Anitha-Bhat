@@ -13,7 +13,7 @@ public class Checker
   static double CHARGERATE_LOWER_LIMIT = 0.8;
 
 
-  static bool batteryIsOk(double temperature, double stateOfCharge, double chargeRate)
+ public static bool batteryIsOk(double temperature, double stateOfCharge, double chargeRate)
   {
     if (monitorChargeRateWarningRange(chargeRate) && monitorSOCWarningRange(stateOfCharge) &&
         monitorTemperatureWarningRange(temperature))
@@ -27,7 +27,7 @@ public class Checker
 
 
 
-   static bool isTemperatureInValidRange(double temperature)
+  public static bool isTemperatureInValidRange(double temperature)
   {
     if (temperature < TEMPERATURE_LOWER_LIMIT || temperature > TEMPERATURE_UPPER_LIMIT)
     {
@@ -41,7 +41,7 @@ public class Checker
 
 
 
-   static bool isStateOfChargeInValidRange(double stateOfCahrge)
+ public static bool isStateOfChargeInValidRange(double stateOfCahrge)
   {
     if (stateOfCahrge < SOC_LOWER_LIMIT || stateOfCahrge > SOC_UPPER_LIMIT)
     {
@@ -53,7 +53,7 @@ public class Checker
 
 
 
-   static bool isChargeRateInValidRange(double chargeRate)
+   public static bool isChargeRateInValidRange(double chargeRate)
   {
     if (chargeRate > CHARGERATE_LOWER_LIMIT)
     {
@@ -64,22 +64,22 @@ public class Checker
     return true;
   }
 
-   static void printText(string text)
+  public static void printText(string text)
   {
     Console.WriteLine(text);
   }
 
-   static double getUpperTolerenceValue(double upperLimit, double value)
+  public static double getUpperTolerenceValue(double upperLimit, double value)
   {
     return (double)value - 0.05 * upperLimit;
 
   }
-   static double getLowerTolerenceValue(double lowerLimt, double value)
+  public static double getLowerTolerenceValue(double lowerLimt, double value)
   {
     return (double)value + 0.05 * lowerLimt;
   }
 
-   static bool isLowerLimitInWarningRange(double temperature, double lowerLimit, Action printAction)
+   public static bool isLowerLimitInWarningRange(double temperature, double lowerLimit, Action printAction)
   {
     if (getLowerTolerenceValue(lowerLimit, temperature) >= temperature)
     {
@@ -89,7 +89,7 @@ public class Checker
     return false;
   }
 
-   static bool isUpperLimitInWarningRange(double temperature, double upperLimit, Action printAction)
+   public static bool isUpperLimitInWarningRange(double temperature, double upperLimit, Action printAction)
   {
     if (getUpperTolerenceValue(upperLimit, temperature) <= temperature)
     {
@@ -99,7 +99,7 @@ public class Checker
     return false;
   }
 
-   static bool monitorSOCWarningRange(double stateOfCharge)
+  public static bool monitorSOCWarningRange(double stateOfCharge)
   {
     if (isLowerLimitInWarningRange(stateOfCharge, SOC_LOWER_LIMIT, () => printText(Resource.WarningDischarge)) || isUpperLimitInWarningRange(stateOfCharge, SOC_UPPER_LIMIT, () => printText(Resource.WarningPeak)))
     {
@@ -110,7 +110,7 @@ public class Checker
   }
 
 
-   static bool monitorChargeRateWarningRange(double chargeRate)
+  public static bool monitorChargeRateWarningRange(double chargeRate)
   {
 
     if (isLowerLimitInWarningRange(chargeRate, CHARGERATE_LOWER_LIMIT, () => printText(Resource.WarningDischarge)))
@@ -120,7 +120,7 @@ public class Checker
     return false;
   }
 
-   static bool monitorTemperatureWarningRange(double temperature)
+   public static bool monitorTemperatureWarningRange(double temperature)
   {
     if (isLowerLimitInWarningRange(temperature, TEMPERATURE_LOWER_LIMIT, () => printText(Resource.WarningDischarge)) || isUpperLimitInWarningRange(temperature, TEMPERATURE_UPPER_LIMIT, () => printText(Resource.WarningPeak)))
     {
