@@ -27,7 +27,7 @@ public class Checker
 
 
 
-  private static bool isTemperatureInValidRange(double temperature)
+   static bool isTemperatureInValidRange(double temperature)
   {
     if (temperature < TEMPERATURE_LOWER_LIMIT || temperature > TEMPERATURE_UPPER_LIMIT)
     {
@@ -41,7 +41,7 @@ public class Checker
 
 
 
-  private static bool isStateOfChargeInValidRange(double stateOfCahrge)
+   static bool isStateOfChargeInValidRange(double stateOfCahrge)
   {
     if (stateOfCahrge < SOC_LOWER_LIMIT || stateOfCahrge > SOC_UPPER_LIMIT)
     {
@@ -53,7 +53,7 @@ public class Checker
 
 
 
-  private static bool isChargeRateInValidRange(double chargeRate)
+   static bool isChargeRateInValidRange(double chargeRate)
   {
     if (chargeRate > CHARGERATE_LOWER_LIMIT)
     {
@@ -79,7 +79,7 @@ public class Checker
     return (double)value + 0.05 * lowerLimt;
   }
 
-  private static bool isLowerLimitInWarningRange(double temperature, double lowerLimit, Action printAction)
+   static bool isLowerLimitInWarningRange(double temperature, double lowerLimit, Action printAction)
   {
     if (getLowerTolerenceValue(lowerLimit, temperature) >= temperature)
     {
@@ -89,7 +89,7 @@ public class Checker
     return false;
   }
 
-  private static bool isUpperLimitInWarningRange(double temperature, double upperLimit, Action printAction)
+   static bool isUpperLimitInWarningRange(double temperature, double upperLimit, Action printAction)
   {
     if (getUpperTolerenceValue(upperLimit, temperature) <= temperature)
     {
@@ -99,7 +99,7 @@ public class Checker
     return false;
   }
 
-  private static bool monitorSOCWarningRange(double stateOfCharge)
+   static bool monitorSOCWarningRange(double stateOfCharge)
   {
     if (isLowerLimitInWarningRange(stateOfCharge, SOC_LOWER_LIMIT, () => printText(Resource.WarningDischarge)) || isUpperLimitInWarningRange(stateOfCharge, SOC_UPPER_LIMIT, () => printText(Resource.WarningPeak)))
     {
@@ -110,7 +110,7 @@ public class Checker
   }
 
 
-  private static bool monitorChargeRateWarningRange(double chargeRate)
+   static bool monitorChargeRateWarningRange(double chargeRate)
   {
 
     if (isLowerLimitInWarningRange(chargeRate, CHARGERATE_LOWER_LIMIT, () => printText(Resource.WarningDischarge)))
@@ -120,7 +120,7 @@ public class Checker
     return false;
   }
 
-  private static bool monitorTemperatureWarningRange(double temperature)
+   static bool monitorTemperatureWarningRange(double temperature)
   {
     if (isLowerLimitInWarningRange(temperature, TEMPERATURE_LOWER_LIMIT, () => printText(Resource.WarningDischarge)) || isUpperLimitInWarningRange(temperature, TEMPERATURE_UPPER_LIMIT, () => printText(Resource.WarningPeak)))
     {
