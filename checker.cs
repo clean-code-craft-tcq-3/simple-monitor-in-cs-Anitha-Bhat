@@ -25,7 +25,7 @@ public class Checker
 
   private static bool isBatteryInWarningRange(double temperature, double stateOfCharge, double chargeRate){
    return  monitorChargeRateWarningRange(chargeRate) && monitorSOCWarningRange(stateOfCharge) &&
-        monitorTemperatureWarningRange(temperature)
+        monitorTemperatureWarningRange(temperature);
   }
 
 
