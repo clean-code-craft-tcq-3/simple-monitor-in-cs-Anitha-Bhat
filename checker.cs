@@ -15,16 +15,14 @@ public class Checker
 
   public static bool batteryIsOk(double temperature, double stateOfCharge, double chargeRate)
   {
-    if (monitorChargeRateWarningRange(chargeRate) && monitorSOCWarningRange(stateOfCharge) &&
-        monitorTemperatureWarningRange(temperature))
-    {
-      return false;
-    }
-
-    return isTemperatureInValidRange(temperature) && isStateOfChargeInValidRange(stateOfCharge) && isChargeRateInValidRange(chargeRate);
+    return !isBatteryInWarningRange(temperature,stateOfCharge,chargeRate)&&isTemperatureInValidRange(temperature) && isStateOfChargeInValidRange(stateOfCharge) && isChargeRateInValidRange(chargeRate);
 
   }
 
+  private static bool isBatteryInWarningRange(double temperature, double stateOfCharge, double chargeRate){
+   return  monitorChargeRateWarningRange(chargeRate) && monitorSOCWarningRange(stateOfCharge) &&
+        monitorTemperatureWarningRange(temperature)
+  }
 
 
   public static bool isTemperatureInValidRange(double temperature)
